@@ -10,6 +10,8 @@
 
 body {
   font-family: "inter";
+  position: relative;
+  // overflow: hidden;
 }
 
 @font-face {
@@ -24,6 +26,14 @@ body {
 
 .notActive {
   display: none;
+}
+
+.black_background {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background-color: #00000095;
+  z-index: 1;
 }
 
 .navbar {
@@ -56,9 +66,31 @@ body {
       li {
         display: flex;
         align-items: center;
+        justify-content: center;
+        cursor: pointer;
         gap: 0.5rem;
         list-style-type: none;
         color: var(--clr-lightgrey);
+        transition: all 0.25s ease;
+        user-select: none;
+
+        &:hover {
+          color: #272727;
+        }
+
+        a {
+          text-decoration: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--clr-lightgrey);
+          transition: all 0.25s ease;
+          gap: 0.5rem;
+
+          &:hover {
+            color: #272727;
+          }
+        }
       }
     }
   }
@@ -72,7 +104,30 @@ body {
     justify-content: space-between;
     align-items: center;
 
-    margin: 2rem;
+    margin: 2rem 5rem;
+
+    .inputDiv {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+
+      svg {
+        position: absolute;
+        left: 4%;
+        color: #cacaca;
+      }
+
+      input {
+        padding: 0.7rem 2rem;
+        border: 1px solid #cacaca;
+        border-radius: 0.5rem;
+
+        &::placeholder {
+          color: #cacaca;
+        }
+      }
+    }
   }
 
   .product_shop {
@@ -314,5 +369,69 @@ body {
         cursor: pointer;
       }
     }
+  }
+}
+
+.cart {
+  position: fixed;
+
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 450px;
+  z-index: 2;
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 1rem 1.5rem;
+
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+  .added_items {
+    padding-top: 1rem;
+
+    .added_items_card {
+      margin-block: 1rem;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid #cacaca;
+      border-radius: 1rem;
+
+      padding: 1rem;
+      gap: 1rem;
+
+      .card_inner {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        img {
+          width: 100px;
+        }
+        .card_info {
+          span {
+            font-weight: bold;
+          }
+        }
+      }
+
+      svg {
+        border: 1px solid #cacaca;
+        cursor: pointer;
+        border-radius: 0.6rem;
+        padding: 0.5rem;
+        color: #cacaca;
+
+        align-self: flex-end;
+      }
+    }
+  }
+
+  .confirm_order {
+    justify-self: flex-end;
   }
 }

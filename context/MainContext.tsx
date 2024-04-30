@@ -10,11 +10,15 @@ type ChildrenType = {
 };
 
 export const MainContext = ({ children }: ChildrenType) => {
-  const [price, setPrice] = useState(0);
+  const [cartPrice, setCartPrice] = useState(0);
 
   const [sneakersData, setSneakersData] = useState<SneakersType[]>(
     sneakers as SneakersType[]
   );
+
+  const [favoriteSneakers, setFavoriteSneakers] = useState(sneakersData);
+  const [addedSneakers, setAddedSneakers] = useState(sneakersData);
+  const [isNavVisible, setIsNavVisible] = useState(false);
 
   const handleFavoriteClick = (id: number) => {
     const updatedSneakers: SneakersType[] = sneakersData.map((item) => {
@@ -30,23 +34,55 @@ export const MainContext = ({ children }: ChildrenType) => {
     setSneakersData(updatedSneakers);
   };
 
-  const [favoriteSneakers, setFavoriteSneakers] = useState(sneakersData);
+  //в закладки
 
   useEffect(() => {
     const filteredSneakers = sneakersData.filter(
       (item) => item.isFavorite === true
     );
     setFavoriteSneakers(filteredSneakers);
+
+    const filteredAddedSneakers = sneakersData.filter(
+      (item) => item.isAdded === true
+    );
+    setAddedSneakers(filteredAddedSneakers);
   }, [sneakersData]);
 
+  useEffect(() => {
+    let allPrices: number[] = [];
+    addedSneakers.forEach((item) => {
+      allPrices.push(item.price);
+    });
+    const result = allPrices.reduce((acc, curval) => acc + curval, 0);
+    setCartPrice(result);
+  }, [addedSneakers]);
+
+  const handleCartClick = () => {
+    setIsNavVisible(!isNavVisible);
+  };
+
+  const removeAddedSneaker = (id: number) => {
+    const filteredAddedSneakers = sneakersData.map((item) => {
+      return item.id === id ? { ...item, isAdded: !item.isAdded } : item;
+    });
+    setSneakersData(filteredAddedSneakers);
+  };
+
   const contextValue: ContextType = {
-    price,
-    setPrice,
+    cartPrice,
+    setCartPrice,
     sneakersData,
     setSneakersData,
+    favoriteSneakers,
+    addedSneakers,
+    setAddedSneakers,
+    isNavVisible,
+    setIsNavVisible,
     handleFavoriteClick,
     handleAddClick,
-    favoriteSneakers,
+    handleCartClick,
+    removeAddedSneaker,
+
     id: 0,
     imageUrl: "",
     isAdded: false,
@@ -54,6 +90,7 @@ export const MainContext = ({ children }: ChildrenType) => {
     title: "",
     favoriteId: null,
     sneakers: [],
+    price: 0,
   };
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;
