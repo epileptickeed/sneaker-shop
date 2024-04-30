@@ -4,7 +4,7 @@ import { CgProfile } from "react-icons/cg";
 import { UseMainContext } from "../../context/MainContext";
 import { Link } from "react-router-dom";
 
-import Cart from "../pages/Cart";
+import Cart from "../pages/Cart/Cart";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef } from "react";
 
