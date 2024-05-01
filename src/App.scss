@@ -370,11 +370,57 @@ body {
       }
     }
   }
+
+  .favorite_empty {
+    text-align: center;
+    font-size: 2rem;
+
+    a {
+      text-decoration: none;
+      color: white;
+
+      button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+        width: 100%;
+
+        border-radius: 1rem;
+        border: none;
+        background-color: rgba(157, 212, 88, 1);
+        color: white;
+        font-weight: bold;
+
+        position: relative;
+        transition: all 0.25s ease;
+        cursor: pointer;
+
+        margin-top: 2rem;
+
+        svg {
+          position: absolute;
+          left: 20%;
+          top: 10%;
+          z-index: 3;
+          transition: all 0.25s ease;
+        }
+
+        &:hover {
+          background-color: rgb(175, 236, 100);
+          svg {
+            left: 18%;
+          }
+        }
+      }
+    }
+  }
 }
 
 .cart {
   position: fixed;
 
+  overflow-y: scroll;
   top: 0;
   right: 0;
   height: 100vh;
@@ -383,13 +429,19 @@ body {
   background-color: white;
 
   display: flex;
-  // align-items: ;
-  // justify-content: center;
   flex-direction: column;
 
   margin: 0 auto;
   padding: 1rem 1.5rem;
   box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+  .cart_inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    gap: 10rem;
+  }
 
   .added_items {
     padding-top: 1rem;
@@ -439,13 +491,23 @@ body {
     align-items: center;
     flex-direction: column;
     padding-inline: 4rem;
+    height: 100%;
 
-    p {
+    .cart_empty_inner {
       text-align: center;
-      color: var(--clr-lightgrey);
-    }
 
-    button {
+      * {
+        padding-block: 0.5rem;
+      }
+
+      p {
+        text-align: center;
+        color: var(--clr-lightgrey);
+      }
+
+      button {
+        padding: 1rem;
+      }
     }
   }
 
@@ -455,6 +517,41 @@ body {
     div {
       display: flex;
       justify-content: space-between;
+    }
+  }
+
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    width: 100%;
+
+    border-radius: 1rem;
+    border: none;
+    background-color: rgba(157, 212, 88, 1);
+    color: white;
+    font-weight: bold;
+
+    position: relative;
+    transition: all 0.25s ease;
+    cursor: pointer;
+
+    margin-top: 2rem;
+
+    svg {
+      position: absolute;
+      left: 20%;
+      top: 10%;
+      z-index: 3;
+      transition: all 0.25s ease;
+    }
+
+    &:hover {
+      background-color: rgb(175, 236, 100);
+      svg {
+        left: 18%;
+      }
     }
   }
 }

@@ -6,30 +6,32 @@ const Cart = () => {
   const { addedSneakers, cartPrice } = UseMainContext();
 
   const discountPrice = cartPrice * 0.05;
-
-  let newarr = false;
-
   return (
     <div className="cart">
       <h1>Корзина</h1>
-      <div className="added_items">
-        {addedSneakers.length == 0 ? (
+      <div className="cart_inner">
+        {addedSneakers.length === 0 ? (
           <CartEmpty />
         ) : (
-          addedSneakers.map((item) => {
-            return <CartItems key={item.id} {...item} />;
-          })
+          <div className="added_items">
+            {addedSneakers.map((item) => {
+              return <CartItems key={item.id} {...item} />;
+            })}
+          </div>
         )}
-      </div>
 
-      <div className="confirm_order">
-        <div>
-          <span>Итого: </span>
-          <b>{cartPrice} руб.</b>
-        </div>
-        <div>
-          <span>Налог 5%: </span>
-          <b>{discountPrice.toFixed()} руб.</b>
+        <div
+          className={addedSneakers.length === 0 ? "notActive" : "confirm_order"}
+        >
+          <div>
+            <span>Итого: </span>
+            <b>{cartPrice} руб.</b>
+          </div>
+          <div>
+            <span>Налог 5%: </span>
+            <b>{discountPrice.toFixed()} руб.</b>
+          </div>
+          <button>Оформите заказ</button>
         </div>
       </div>
     </div>
