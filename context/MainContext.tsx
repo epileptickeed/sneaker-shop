@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import ContextType from "../interfaces/interfaces";
 import SneakersType from "../interfaces/interfaces";
 import sneakers from "../data/sneakers.json";
+import axios from "axios";
 
 const Context = createContext({} as ContextType);
 
@@ -12,13 +13,25 @@ type ChildrenType = {
 export const MainContext = ({ children }: ChildrenType) => {
   const [cartPrice, setCartPrice] = useState(0);
 
-  const [sneakersData, setSneakersData] = useState<SneakersType[]>(
-    sneakers as SneakersType[]
-  );
+  //если сервак упадет или ещё что-то случиться воткнуть в state (sneakers as SneakersType[])
+  const [sneakersData, setSneakersData] = useState<SneakersType[]>([]);
+  const [isContentLoaded, setIsContentLoaded] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get(`https://66324e21c51e14d695640a4c.mockapi.io/sneakers/sneakers`)
+      .then((response) => {
+        setSneakersData(response.data);
+        setIsContentLoaded(true);
+      });
+  }, []);
 
   const [favoriteSneakers, setFavoriteSneakers] = useState(sneakersData);
   const [addedSneakers, setAddedSneakers] = useState(sneakersData);
   const [isNavVisible, setIsNavVisible] = useState(false);
+
+  const [numberOfOrders, setNumberOfOrders] = useState(0);
+  const [isOrderConfirmed, setIsOrderConfirmed] = useState(false);
 
   const handleFavoriteClick = (id: number) => {
     const updatedSneakers: SneakersType[] = sneakersData.map((item) => {
@@ -68,20 +81,45 @@ export const MainContext = ({ children }: ChildrenType) => {
     setSneakersData(filteredAddedSneakers);
   };
 
+  //ПРИ НАЖАТИИ ДОБАВИТЬ В ПРОФИЛЬ КОРОЧЕ, И ЧТОБЫ КАРЗИНА ОЧИЩАЛАСЬ
+  const handleOrderConfirmation = () => {
+    setIsOrderConfirmed(true);
+    setNumberOfOrders((currentNumber) => currentNumber + 1);
+  };
+
+  const handleReturn = () => {
+    setIsNavVisible(false);
+    setIsOrderConfirmed(false);
+  };
+
   const contextValue: ContextType = {
     cartPrice,
     setCartPrice,
+
     sneakersData,
     setSneakersData,
+
     favoriteSneakers,
     addedSneakers,
     setAddedSneakers,
+
     isNavVisible,
     setIsNavVisible,
+
+    isContentLoaded,
+
+    numberOfOrders,
+    setNumberOfOrders,
+
+    isOrderConfirmed,
+    setIsOrderConfirmed,
+
     handleFavoriteClick,
     handleAddClick,
     handleCartClick,
     removeAddedSneaker,
+    handleOrderConfirmation,
+    handleReturn,
 
     id: 0,
     imageUrl: "",

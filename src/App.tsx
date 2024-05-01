@@ -1,7 +1,7 @@
 import "./App.scss";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
-import Favorite from "./pages/Favorite";
+import Favorite from "./pages/Favorite/Favorite";
 import { Route, Routes } from "react-router-dom";
 import { UseMainContext } from "../context/MainContext";
 

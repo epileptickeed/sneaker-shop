@@ -104,7 +104,7 @@ body {
     justify-content: space-between;
     align-items: center;
 
-    margin: 2rem 5rem;
+    margin: 2rem;
 
     .inputDiv {
       display: flex;
@@ -249,6 +249,15 @@ body {
       }
     }
   }
+}
+
+.skeleton {
+  border: 1px solid #cacaca;
+  border-radius: 1rem;
+  padding: 2rem 2rem 0 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .favorite {
@@ -553,5 +562,20 @@ body {
         left: 18%;
       }
     }
+  }
+}
+
+.cart_order_confirmed {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+
+  .confirm_order {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }

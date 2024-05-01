@@ -2,9 +2,10 @@ import { useState } from "react";
 import { UseMainContext } from "../../../context/MainContext";
 import ProductsCards from "./ProductsCards";
 import { CiSearch } from "react-icons/ci";
+import Skeleton from "../Skeleton/Skeleton";
 
 const Product = () => {
-  const { sneakersData } = UseMainContext();
+  const { sneakersData, isContentLoaded } = UseMainContext();
   const [searchValue, setSearchValue] = useState("");
 
   const filteredBySearch = sneakersData
@@ -14,7 +15,9 @@ const Product = () => {
       }
       return false;
     })
-    .map((item) => <ProductsCards key={item.id} {...item} />);
+    .map((item) => {
+      return <ProductsCards key={item.id} {...item} />;
+    });
 
   return (
     <div className="product">
@@ -30,7 +33,13 @@ const Product = () => {
           />
         </div>
       </div>
-      <div className="product_shop">{filteredBySearch}</div>
+      <div className="product_shop">
+        {isContentLoaded
+          ? filteredBySearch
+          : [...new Array(10)].map((_, index) => {
+              return <Skeleton key={index} />;
+            })}
+      </div>
     </div>
   );
 };

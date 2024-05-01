@@ -1,15 +1,23 @@
 import { UseMainContext } from "../../../context/MainContext";
 import CartEmpty from "./CartEmpty";
 import CartItems from "./CartItems";
+import OrderConfirmed from "./OrderConfirmed";
 
 const Cart = () => {
-  const { addedSneakers, cartPrice } = UseMainContext();
+  const {
+    addedSneakers,
+    cartPrice,
+    isOrderConfirmed,
+    setIsOrderConfirmed,
+    handleOrderConfirmation,
+  } = UseMainContext();
 
   const discountPrice = cartPrice * 0.05;
+
   return (
     <div className="cart">
       <h1>Корзина</h1>
-      <div className="cart_inner">
+      <div className={isOrderConfirmed ? "notActive" : "cart_inner"}>
         {addedSneakers.length === 0 ? (
           <CartEmpty />
         ) : (
@@ -31,8 +39,13 @@ const Cart = () => {
             <span>Налог 5%: </span>
             <b>{discountPrice.toFixed()} руб.</b>
           </div>
-          <button>Оформите заказ</button>
+          <button onClick={() => handleOrderConfirmation()}>
+            Оформите заказ
+          </button>
         </div>
+      </div>
+      <div className={isOrderConfirmed ? "cart_order_confirmed" : "notActive"}>
+        <OrderConfirmed />
       </div>
     </div>
   );

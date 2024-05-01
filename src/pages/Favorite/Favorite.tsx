@@ -1,6 +1,6 @@
-import { UseMainContext } from "../../context/MainContext";
-import Empty from "./Favorite/Empty";
-import Card from "./Favorite/Card";
+import { UseMainContext } from "../../../context/MainContext";
+import Empty from "./Empty";
+import Card from "./Card";
 
 const Favorite = () => {
   const { favoriteSneakers } = UseMainContext();
