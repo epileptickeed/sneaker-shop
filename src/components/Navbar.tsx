@@ -1,12 +1,12 @@
-import { IoCartOutline } from "react-icons/io5";
-import { CiHeart } from "react-icons/ci";
-import { CgProfile } from "react-icons/cg";
-import { UseMainContext } from "../../context/MainContext";
-import { Link } from "react-router-dom";
+import { IoCartOutline } from 'react-icons/io5';
+import { CiHeart } from 'react-icons/ci';
+import { CgProfile } from 'react-icons/cg';
+import { UseMainContext } from '../../context/MainContext';
+import { Link } from 'react-router-dom';
 
-import Cart from "../pages/Cart/Cart";
-import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useRef } from "react";
+import Cart from '../pages/Cart/Cart';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useRef } from 'react';
 
 const Navbar = () => {
   const { cartPrice } = UseMainContext();
@@ -24,9 +24,9 @@ const Navbar = () => {
         setIsNavVisible(false);
       }
     };
-    document.addEventListener("mousedown", handler);
+    document.addEventListener('mousedown', handler);
     return () => {
-      document.addEventListener("mousedown", handler);
+      document.addEventListener('mousedown', handler);
     };
   }, []);
 
@@ -37,7 +37,7 @@ const Navbar = () => {
       <div className="navbar">
         <div className="logo">
           <Link to="/">
-            <img src={"/images/logo.png"} alt="" />
+            <img src={'/images/logo.png'} alt="" />
           </Link>
           <div className="logo_title">
             <h1>React Sneakers</h1>
@@ -48,13 +48,12 @@ const Navbar = () => {
         <AnimatePresence mode="wait">
           <motion.div
             ref={cartRef}
-            className={"cart"}
+            className={'cart'}
             variants={vars}
             initial="default"
-            animate={isNavVisible ? "visible" : "default"}
+            animate={isNavVisible ? 'visible' : 'default'}
             exit="exit"
-            transition={{ type: "tween" }}
-          >
+            transition={{ type: 'tween' }}>
             <Cart />
           </motion.div>
         </AnimatePresence>
@@ -70,7 +69,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link to="/">
+              <Link to="profile">
                 <CgProfile size={20} /> Профиль
               </Link>
             </li>

@@ -1,8 +1,8 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import ContextType from "../interfaces/interfaces";
-import SneakersType from "../interfaces/interfaces";
-import sneakers from "../data/sneakers.json";
-import axios from "axios";
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import ContextType from '../interfaces/interfaces';
+import SneakersType from '../interfaces/interfaces';
+import sneakers from '../data/sneakers.json';
+import axios from 'axios';
 
 const Context = createContext({} as ContextType);
 
@@ -18,12 +18,10 @@ export const MainContext = ({ children }: ChildrenType) => {
   const [isContentLoaded, setIsContentLoaded] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(`https://66324e21c51e14d695640a4c.mockapi.io/sneakers/sneakers`)
-      .then((response) => {
-        setSneakersData(response.data);
-        setIsContentLoaded(true);
-      });
+    axios.get(`https://66324e21c51e14d695640a4c.mockapi.io/sneakers/sneakers`).then((response) => {
+      setSneakersData(response.data);
+      setIsContentLoaded(true);
+    });
   }, []);
 
   const [favoriteSneakers, setFavoriteSneakers] = useState(sneakersData);
@@ -50,14 +48,10 @@ export const MainContext = ({ children }: ChildrenType) => {
   //в закладки
 
   useEffect(() => {
-    const filteredSneakers = sneakersData.filter(
-      (item) => item.isFavorite === true
-    );
+    const filteredSneakers = sneakersData.filter((item) => item.isFavorite === true);
     setFavoriteSneakers(filteredSneakers);
 
-    const filteredAddedSneakers = sneakersData.filter(
-      (item) => item.isAdded === true
-    );
+    const filteredAddedSneakers = sneakersData.filter((item) => item.isAdded === true);
     setAddedSneakers(filteredAddedSneakers);
   }, [sneakersData]);
 
@@ -81,10 +75,28 @@ export const MainContext = ({ children }: ChildrenType) => {
     setSneakersData(filteredAddedSneakers);
   };
 
+  const [orders, setOrders] = useState<SneakersType[]>([]);
+
   //ПРИ НАЖАТИИ ДОБАВИТЬ В ПРОФИЛЬ КОРОЧЕ, И ЧТОБЫ КАРЗИНА ОЧИЩАЛАСЬ
-  const handleOrderConfirmation = () => {
+  const handleOrderConfirmation = (addedSneakers: SneakersType[]) => {
     setIsOrderConfirmed(true);
     setNumberOfOrders((currentNumber) => currentNumber + 1);
+
+    setOrders((currentOrders: any) => {
+      return [
+        ...currentOrders,
+        {
+          id: crypto.randomUUID(),
+          orderNumber: numberOfOrders,
+          sneakers: addedSneakers,
+        },
+      ];
+    });
+
+    const filteredAddedSneakers = sneakersData.map((item) => {
+      return item.isAdded ? { ...item, isAdded: false } : item;
+    });
+    setSneakersData(filteredAddedSneakers);
   };
 
   const handleReturn = () => {
@@ -114,6 +126,9 @@ export const MainContext = ({ children }: ChildrenType) => {
     isOrderConfirmed,
     setIsOrderConfirmed,
 
+    orders,
+    setOrders,
+
     handleFavoriteClick,
     handleAddClick,
     handleCartClick,
@@ -122,13 +137,14 @@ export const MainContext = ({ children }: ChildrenType) => {
     handleReturn,
 
     id: 0,
-    imageUrl: "",
+    imageUrl: '',
     isAdded: false,
     isFavorite: false,
-    title: "",
+    title: '',
     favoriteId: null,
     sneakers: [],
     price: 0,
+    orderNumber: 0,
   };
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;

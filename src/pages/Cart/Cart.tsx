@@ -1,23 +1,17 @@
-import { UseMainContext } from "../../../context/MainContext";
-import CartEmpty from "./CartEmpty";
-import CartItems from "./CartItems";
-import OrderConfirmed from "./OrderConfirmed";
+import { UseMainContext } from '../../../context/MainContext';
+import CartEmpty from './CartEmpty';
+import CartItems from './CartItems';
+import OrderConfirmed from './OrderConfirmed';
 
 const Cart = () => {
-  const {
-    addedSneakers,
-    cartPrice,
-    isOrderConfirmed,
-    setIsOrderConfirmed,
-    handleOrderConfirmation,
-  } = UseMainContext();
+  const { addedSneakers, cartPrice, isOrderConfirmed, handleOrderConfirmation } = UseMainContext();
 
   const discountPrice = cartPrice * 0.05;
 
   return (
     <div className="cart">
       <h1>Корзина</h1>
-      <div className={isOrderConfirmed ? "notActive" : "cart_inner"}>
+      <div className={isOrderConfirmed ? 'notActive' : 'cart_inner'}>
         {addedSneakers.length === 0 ? (
           <CartEmpty />
         ) : (
@@ -28,9 +22,7 @@ const Cart = () => {
           </div>
         )}
 
-        <div
-          className={addedSneakers.length === 0 ? "notActive" : "confirm_order"}
-        >
+        <div className={addedSneakers.length === 0 ? 'notActive' : 'confirm_order'}>
           <div>
             <span>Итого: </span>
             <b>{cartPrice} руб.</b>
@@ -39,12 +31,10 @@ const Cart = () => {
             <span>Налог 5%: </span>
             <b>{discountPrice.toFixed()} руб.</b>
           </div>
-          <button onClick={() => handleOrderConfirmation()}>
-            Оформите заказ
-          </button>
+          <button onClick={() => handleOrderConfirmation(addedSneakers)}>Оформите заказ</button>
         </div>
       </div>
-      <div className={isOrderConfirmed ? "cart_order_confirmed" : "notActive"}>
+      <div className={isOrderConfirmed ? 'cart_order_confirmed' : 'notActive'}>
         <OrderConfirmed />
       </div>
     </div>

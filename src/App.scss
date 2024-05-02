@@ -9,14 +9,14 @@
 }
 
 body {
-  font-family: "inter";
+  font-family: 'inter';
   position: relative;
   // overflow: hidden;
 }
 
 @font-face {
-  font-family: "inter";
-  src: url("/font/Inter-VariableFont_slnt,wght.ttf");
+  font-family: 'inter';
+  src: url('/font/Inter-VariableFont_slnt,wght.ttf');
 }
 
 .container {
@@ -577,5 +577,51 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+}
+
+.profile {
+  width: 100%;
+
+  .orders {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+
+    .orders_card {
+      padding: 1rem;
+
+      .orders_card_inner {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        gap: 2rem;
+
+        .orders_sneaker_card {
+          border: 1px solid #cacaca;
+          border-radius: 2rem;
+
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+
+          margin-top: 1rem;
+          padding: 2rem;
+
+          img {
+            width: 100px;
+            height: 100px;
+          }
+
+          span {
+            max-width: 150px;
+          }
+        }
+      }
+    }
   }
 }

@@ -6,6 +6,7 @@ export default interface SneakersType {
   price: number;
   title: string;
   favoriteId: null;
+  orderNumber: number;
 }
 
 export default interface ContextType {
@@ -32,10 +33,13 @@ export default interface ContextType {
   isOrderConfirmed: boolean;
   setIsOrderConfirmed: React.Dispatch<React.SetStateAction<boolean>>;
 
+  orders: SneakersType[];
+  setOrders: React.Dispatch<React.SetStateAction<SneakersType[]>>;
+
   removeAddedSneaker: (id: number) => void;
   handleAddClick: (id: number) => void;
   handleFavoriteClick: (id: number) => void;
   handleCartClick: () => void;
-  handleOrderConfirmation: () => void;
+  handleOrderConfirmation: (addedSneakers: SneakersType[]) => void;
   handleReturn: () => void;
 }
