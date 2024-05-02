@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { UseMainContext } from "../../../context/MainContext";
-import ProductsCards from "./ProductsCards";
-import { CiSearch } from "react-icons/ci";
-import Skeleton from "../Skeleton/Skeleton";
+import { useState } from 'react';
+import { UseMainContext } from '../../../context/MainContext';
+import ProductsCards from './ProductsCards';
+import { CiSearch } from 'react-icons/ci';
+import Skeleton from '../Skeleton/Skeleton';
 
 const Product = () => {
   const { sneakersData, isContentLoaded } = UseMainContext();
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
 
   const filteredBySearch = sneakersData
     .filter((item) => {

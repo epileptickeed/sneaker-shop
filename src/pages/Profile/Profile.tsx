@@ -1,8 +1,7 @@
-import React from 'react';
 import { UseMainContext } from '../../../context/MainContext';
 
 const Profile = () => {
-  const { orders, numberOfOrders } = UseMainContext();
+  const { orders } = UseMainContext();
   console.log(orders);
   return (
     <div className="profile">
@@ -15,8 +14,8 @@ const Profile = () => {
                 {item.sneakers.map((sneaker) => {
                   return (
                     <div key={sneaker.id} className="orders_sneaker_card">
-                      {sneaker.title}
-                      <img src={sneaker.imageUrl} alt="" />
+                      <img src={sneaker.imageUrl} alt={sneaker.title} />
+                      <span>{sneaker.title}</span>
                     </div>
                   );
                 })}

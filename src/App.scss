@@ -581,26 +581,46 @@ body {
 }
 
 .profile {
+  width: 100%;
+
   .orders {
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     flex-wrap: wrap;
+    width: 100%;
 
     .orders_card {
-      border: 1px solid;
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
       padding: 1rem;
 
       .orders_card_inner {
         display: flex;
+        justify-content: center;
         flex-wrap: wrap;
-      }
 
-      .orders_sneaker_card {
-        border: 1px solid;
+        gap: 2rem;
+
+        .orders_sneaker_card {
+          border: 1px solid #cacaca;
+          border-radius: 2rem;
+
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+
+          margin-top: 1rem;
+          padding: 2rem;
+
+          img {
+            width: 100px;
+            height: 100px;
+          }
+
+          span {
+            max-width: 150px;
+          }
+        }
       }
     }
   }

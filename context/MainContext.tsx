@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import ContextType from '../interfaces/interfaces';
 import SneakersType from '../interfaces/interfaces';
 import sneakers from '../data/sneakers.json';
@@ -104,56 +104,50 @@ export const MainContext = ({ children }: ChildrenType) => {
     setIsOrderConfirmed(false);
   };
 
-  // const contextValue: ContextType = {
+  const contextValue: ContextType = {
+    cartPrice,
+    setCartPrice,
 
-  //   id: 0,
-  //   imageUrl: '',
-  //   isAdded: false,
-  //   isFavorite: false,
-  //   title: '',
-  //   favoriteId: null,
-  //   sneakers: [],
-  //   price: 0,
-  //   orderNumber: 0,
-  // };
+    sneakersData,
+    setSneakersData,
 
-  return (
-    <Context.Provider
-      value={{
-        cartPrice,
-        setCartPrice,
+    favoriteSneakers,
+    addedSneakers,
+    setAddedSneakers,
 
-        sneakersData,
-        setSneakersData,
+    isNavVisible,
+    setIsNavVisible,
 
-        favoriteSneakers,
-        addedSneakers,
-        setAddedSneakers,
+    isContentLoaded,
 
-        isNavVisible,
-        setIsNavVisible,
+    numberOfOrders,
+    setNumberOfOrders,
 
-        isContentLoaded,
+    isOrderConfirmed,
+    setIsOrderConfirmed,
 
-        numberOfOrders,
-        setNumberOfOrders,
+    orders,
+    setOrders,
 
-        isOrderConfirmed,
-        setIsOrderConfirmed,
+    handleFavoriteClick,
+    handleAddClick,
+    handleCartClick,
+    removeAddedSneaker,
+    handleOrderConfirmation,
+    handleReturn,
 
-        orders,
-        setOrders,
+    id: 0,
+    imageUrl: '',
+    isAdded: false,
+    isFavorite: false,
+    title: '',
+    favoriteId: null,
+    sneakers: [],
+    price: 0,
+    orderNumber: 0,
+  };
 
-        handleFavoriteClick,
-        handleAddClick,
-        handleCartClick,
-        removeAddedSneaker,
-        handleOrderConfirmation,
-        handleReturn,
-      }}>
-      {children}
-    </Context.Provider>
-  );
+  return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 };
 
 export const UseMainContext = () => {
