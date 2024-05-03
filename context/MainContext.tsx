@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import ContextType from '../interfaces/interfaces';
 import SneakersType from '../interfaces/interfaces';
-import sneakers from '../data/sneakers.json';
+// import sneakers from '../data/sneakers.json';
 import axios from 'axios';
 
 const Context = createContext({} as ContextType);
