@@ -4,29 +4,11 @@ import { CiSearch } from "react-icons/ci";
 import Skeleton from "../Skeleton/Skeleton";
 import { useDispatch } from "react-redux";
 import { setSearchValue } from "../../../redux/Slices/Sneakers/SneakerSlice";
-import useDebounce from "../../../hooks/useDebounce";
 
 const Product = () => {
   const { sneakersData, status, searchValue } = UseMainContext();
 
   const dispatch = useDispatch();
-
-  // const filteredBySearch = useDebounce(
-  //   () =>
-  //     sneakersData
-  //       .filter((item) => {
-  //         if (item.title.toLowerCase().includes(searchValue.toLowerCase())) {
-  //           return true;
-  //         }
-  //         return false;
-  //       })
-  //       .map((item) => {
-  //         return <ProductsCards key={item.id} {...item} />;
-  //       }),
-  //   1000,
-  //   [searchValue]
-  // );
-
   const filteredBySearch = sneakersData
     .filter((item) => {
       if (item.title.toLowerCase().includes(searchValue)) {
