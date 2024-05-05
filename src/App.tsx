@@ -1,17 +1,17 @@
-import './App.scss';
-import Home from './pages/Home';
-import Navbar from './components/Navbar';
-import Favorite from './pages/Favorite/Favorite';
-import { Route, Routes } from 'react-router-dom';
-import { UseMainContext } from '../context/MainContext';
-import Profile from './pages/Profile/Profile';
+import "./App.scss";
+import Home from "./pages/Home";
+import Navbar from "./components/Navbar";
+import Favorite from "./pages/Favorite/Favorite";
+import { Route, Routes } from "react-router-dom";
+import { UseMainContext } from "../context/MainContext";
+import Profile from "./pages/Profile/Profile";
 
 function App() {
-  const { isNavVisible } = UseMainContext();
+  const { navVisible } = UseMainContext();
 
   return (
     <div className="main_wrapper">
-      <div className={isNavVisible ? 'black_background' : 'notActive'}></div>
+      <div className={navVisible ? "black_background" : "notActive"}></div>
       <Navbar />
 
       <Routes>
