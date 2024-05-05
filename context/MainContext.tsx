@@ -52,14 +52,14 @@ export const MainContext = ({ children }: ChildrenType) => {
     const updatedSneakers: SneakersType[] = sneakersData.map((item) => {
       return item.id === id ? { ...item, isFavorite: !item.isFavorite } : item;
     });
-    setSneakersData(updatedSneakers);
+    dispatch(setSneakersData(updatedSneakers));
   };
 
   const handleAddClick = (id: number) => {
     const updatedSneakers: SneakersType[] = sneakersData.map((item) => {
       return item.id === id ? { ...item, isAdded: !item.isAdded } : item;
     });
-    setSneakersData(updatedSneakers);
+    dispatch(setSneakersData(updatedSneakers));
   };
 
   //в закладки
@@ -89,7 +89,7 @@ export const MainContext = ({ children }: ChildrenType) => {
     const filteredAddedSneakers = sneakersData.map((item) => {
       return item.id === id ? { ...item, isAdded: !item.isAdded } : item;
     });
-    setSneakersData(filteredAddedSneakers);
+    dispatch(setSneakersData(filteredAddedSneakers));
   };
 
   //ПРИ НАЖАТИИ ДОБАВИТЬ В ПРОФИЛЬ КОРОЧЕ, И ЧТОБЫ КАРЗИНА ОЧИЩАЛАСЬ
@@ -102,7 +102,7 @@ export const MainContext = ({ children }: ChildrenType) => {
     const filteredAddedSneakers = sneakersData.map((item) => {
       return item.isAdded ? { ...item, isAdded: false } : item;
     });
-    setSneakersData(filteredAddedSneakers);
+    dispatch(setSneakersData(filteredAddedSneakers));
   };
 
   const handleReturn = () => {
