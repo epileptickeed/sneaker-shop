@@ -17,12 +17,10 @@ export default interface ContextType {
 
   sneakers: SneakersType[];
   sneakersData: SneakersType[];
-  setSneakersData: React.Dispatch<React.SetStateAction<SneakersType[]>>;
 
   navVisible: boolean;
   favoriteSneakers: SneakersType[];
   addedSneakers: SneakersType[];
-  setAddedSneakers: React.Dispatch<React.SetStateAction<SneakersType[]>>;
   numberOfOrders: number;
   status: string;
   isOrderConfirmed: boolean;
@@ -32,7 +30,6 @@ export default interface ContextType {
   removeAddedSneaker: (id: number) => void;
   handleAddClick: (id: number) => void;
   handleFavoriteClick: (id: number) => void;
-  // handleCartClick: () => void;
   handleOrderConfirmation: (addedSneakers: SneakersType[]) => void;
   handleReturn: () => void;
 }

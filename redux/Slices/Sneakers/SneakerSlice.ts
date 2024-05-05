@@ -1,17 +1,22 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import SneakersType from "../../../interfaces/interfaces";
 import axios from "axios";
+import { RootState } from "@reduxjs/toolkit/query";
 
 interface SneakersTypeProps {
   sneakersData: SneakersType[];
   status: string;
   searchValue: string;
+  favoriteSneakers: SneakersType[];
+  addedSneakers: SneakersType[];
 }
 
 const initialState: SneakersTypeProps = {
   sneakersData: [],
   status: "loading",
   searchValue: "",
+  favoriteSneakers: [],
+  addedSneakers: [],
 };
 
 export const fetchSneakers = createAsyncThunk(
@@ -34,6 +39,12 @@ const SneakerSlice = createSlice({
     setSearchValue: (state, action) => {
       state.searchValue = action.payload;
     },
+    setFavoriteSneakers: (state, action) => {
+      state.favoriteSneakers = action.payload;
+    },
+    setAddedSneakers: (state, action) => {
+      state.addedSneakers = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -52,5 +63,10 @@ const SneakerSlice = createSlice({
   },
 });
 
-export const { setSneakersData, setSearchValue } = SneakerSlice.actions;
+export const {
+  setSneakersData,
+  setSearchValue,
+  setFavoriteSneakers,
+  setAddedSneakers,
+} = SneakerSlice.actions;
 export default SneakerSlice.reducer;
