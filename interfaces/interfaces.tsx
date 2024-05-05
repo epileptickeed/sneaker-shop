@@ -1,3 +1,5 @@
+import { OrdersType } from "../redux/Slices/Orders/OrderSlices";
+
 export default interface SneakersType {
   id: number;
   imageUrl: string;
@@ -11,35 +13,26 @@ export default interface SneakersType {
 
 export default interface ContextType {
   cartPrice: number;
-  setCartPrice: React.Dispatch<React.SetStateAction<number>>;
+  // setCartPrice: React.Dispatch<React.SetStateAction<number>>;
 
   sneakers: SneakersType[];
   sneakersData: SneakersType[];
   setSneakersData: React.Dispatch<React.SetStateAction<SneakersType[]>>;
 
-  isNavVisible: boolean;
-  setIsNavVisible: React.Dispatch<React.SetStateAction<boolean>>;
-
+  navVisible: boolean;
   favoriteSneakers: SneakersType[];
-
   addedSneakers: SneakersType[];
   setAddedSneakers: React.Dispatch<React.SetStateAction<SneakersType[]>>;
-
   numberOfOrders: number;
-  setNumberOfOrders: React.Dispatch<React.SetStateAction<number>>;
-
-  isContentLoaded: boolean;
-
+  status: string;
   isOrderConfirmed: boolean;
-  setIsOrderConfirmed: React.Dispatch<React.SetStateAction<boolean>>;
-
-  orders: SneakersType[];
-  setOrders: React.Dispatch<React.SetStateAction<SneakersType[]>>;
+  orders: OrdersType[];
+  searchValue: string;
 
   removeAddedSneaker: (id: number) => void;
   handleAddClick: (id: number) => void;
   handleFavoriteClick: (id: number) => void;
-  handleCartClick: () => void;
+  // handleCartClick: () => void;
   handleOrderConfirmation: (addedSneakers: SneakersType[]) => void;
   handleReturn: () => void;
 }

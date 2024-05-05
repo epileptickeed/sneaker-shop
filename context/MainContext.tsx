@@ -1,7 +1,21 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import ContextType from '../interfaces/interfaces';
-import SneakersType from '../interfaces/interfaces';
-import axios from 'axios';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import ContextType from "../interfaces/interfaces";
+import SneakersType from "../interfaces/interfaces";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../redux/store";
+
+import { setIsNavVisible } from "../redux/Slices/Cart/NavSlice";
+import { setCartPrice } from "../redux/Slices/Cart/CartSlice";
+
+import {
+  setIsOrderConfirmed,
+  setNumberOfOrders,
+  setOrders,
+} from "../redux/Slices/Orders/OrderSlices";
+import {
+  setSneakersData,
+  fetchSneakers,
+} from "../redux/Slices/Sneakers/SneakerSlice";
 
 const Context = createContext({} as ContextType);
 
@@ -10,25 +24,29 @@ type ChildrenType = {
 };
 
 export const MainContext = ({ children }: ChildrenType) => {
-  const [cartPrice, setCartPrice] = useState(0);
+  const dispatch = useDispatch<AppDispatch>();
 
+  const navVisible = useSelector(
+    (state: RootState) => state.isNavVisible.value
+  );
+  const cartPrice = useSelector((state: RootState) => state.cart.cartPrice);
+  const { isOrderConfirmed, numberOfOrders, orders } = useSelector(
+    (state: RootState) => state.order
+  );
+  const searchValue = useSelector(
+    (state: RootState) => state.sneakers.searchValue
+  );
   //если сервак упадет или ещё что-то случиться воткнуть в state (sneakers as SneakersType[])
-  const [sneakersData, setSneakersData] = useState<SneakersType[]>([]);
-  const [isContentLoaded, setIsContentLoaded] = useState(false);
+  const { sneakersData, status } = useSelector(
+    (state: RootState) => state.sneakers
+  );
 
   useEffect(() => {
-    axios.get(`https://66324e21c51e14d695640a4c.mockapi.io/sneakers/sneakers`).then((response) => {
-      setSneakersData(response.data);
-      setIsContentLoaded(true);
-    });
+    dispatch(fetchSneakers());
   }, []);
 
   const [favoriteSneakers, setFavoriteSneakers] = useState(sneakersData);
   const [addedSneakers, setAddedSneakers] = useState(sneakersData);
-  const [isNavVisible, setIsNavVisible] = useState(false);
-
-  const [numberOfOrders, setNumberOfOrders] = useState(0);
-  const [isOrderConfirmed, setIsOrderConfirmed] = useState(false);
 
   const handleFavoriteClick = (id: number) => {
     const updatedSneakers: SneakersType[] = sneakersData.map((item) => {
@@ -47,10 +65,14 @@ export const MainContext = ({ children }: ChildrenType) => {
   //в закладки
 
   useEffect(() => {
-    const filteredSneakers = sneakersData.filter((item) => item.isFavorite === true);
+    const filteredSneakers = sneakersData.filter(
+      (item) => item.isFavorite === true
+    );
     setFavoriteSneakers(filteredSneakers);
 
-    const filteredAddedSneakers = sneakersData.filter((item) => item.isAdded === true);
+    const filteredAddedSneakers = sneakersData.filter(
+      (item) => item.isAdded === true
+    );
     setAddedSneakers(filteredAddedSneakers);
   }, [sneakersData]);
 
@@ -60,12 +82,8 @@ export const MainContext = ({ children }: ChildrenType) => {
       allPrices.push(item.price);
     });
     const result = allPrices.reduce((acc, curval) => acc + curval, 0);
-    setCartPrice(result);
+    dispatch(setCartPrice(result));
   }, [addedSneakers]);
-
-  const handleCartClick = () => {
-    setIsNavVisible(!isNavVisible);
-  };
 
   const removeAddedSneaker = (id: number) => {
     const filteredAddedSneakers = sneakersData.map((item) => {
@@ -74,23 +92,12 @@ export const MainContext = ({ children }: ChildrenType) => {
     setSneakersData(filteredAddedSneakers);
   };
 
-  const [orders, setOrders] = useState<SneakersType[]>([]);
-
   //ПРИ НАЖАТИИ ДОБАВИТЬ В ПРОФИЛЬ КОРОЧЕ, И ЧТОБЫ КАРЗИНА ОЧИЩАЛАСЬ
   const handleOrderConfirmation = (addedSneakers: SneakersType[]) => {
-    setIsOrderConfirmed(true);
-    setNumberOfOrders((currentNumber) => currentNumber + 1);
+    dispatch(setIsOrderConfirmed(true));
+    dispatch(setNumberOfOrders(numberOfOrders));
 
-    setOrders((currentOrders: any) => {
-      return [
-        ...currentOrders,
-        {
-          id: crypto.randomUUID(),
-          orderNumber: numberOfOrders,
-          sneakers: addedSneakers,
-        },
-      ];
-    });
+    dispatch(setOrders(addedSneakers));
 
     const filteredAddedSneakers = sneakersData.map((item) => {
       return item.isAdded ? { ...item, isAdded: false } : item;
@@ -99,47 +106,42 @@ export const MainContext = ({ children }: ChildrenType) => {
   };
 
   const handleReturn = () => {
-    setIsNavVisible(false);
-    setIsOrderConfirmed(false);
+    dispatch(setIsNavVisible(false));
+    dispatch(setIsOrderConfirmed(false));
   };
 
   const contextValue: ContextType = {
     cartPrice,
-    setCartPrice,
 
     sneakersData,
     setSneakersData,
+    status,
 
     favoriteSneakers,
     addedSneakers,
     setAddedSneakers,
 
-    isNavVisible,
-    setIsNavVisible,
-
-    isContentLoaded,
+    navVisible,
 
     numberOfOrders,
-    setNumberOfOrders,
 
     isOrderConfirmed,
-    setIsOrderConfirmed,
 
     orders,
-    setOrders,
+
+    searchValue,
 
     handleFavoriteClick,
     handleAddClick,
-    handleCartClick,
     removeAddedSneaker,
     handleOrderConfirmation,
     handleReturn,
 
     id: 0,
-    imageUrl: '',
+    imageUrl: "",
     isAdded: false,
     isFavorite: false,
-    title: '',
+    title: "",
     favoriteId: null,
     sneakers: [],
     price: 0,

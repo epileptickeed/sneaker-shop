@@ -1,15 +1,14 @@
-import { UseMainContext } from '../../../context/MainContext';
+import { UseMainContext } from "../../../context/MainContext";
 
 const Profile = () => {
   const { orders } = UseMainContext();
-  console.log(orders);
   return (
     <div className="profile">
       <div className="orders">
         {orders.map((item) => {
           return (
             <div className="orders_card" key={item.id}>
-              <h3>Заказ номер {item.orderNumber + 1}</h3>
+              <h3>Заказ номер {item.orderNumber}</h3>
               <div className="orders_card_inner">
                 {item.sneakers.map((sneaker) => {
                   return (

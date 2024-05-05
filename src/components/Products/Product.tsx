@@ -1,16 +1,35 @@
-import { useState } from 'react';
-import { UseMainContext } from '../../../context/MainContext';
-import ProductsCards from './ProductsCards';
-import { CiSearch } from 'react-icons/ci';
-import Skeleton from '../Skeleton/Skeleton';
+import { UseMainContext } from "../../../context/MainContext";
+import ProductsCards from "./ProductsCards";
+import { CiSearch } from "react-icons/ci";
+import Skeleton from "../Skeleton/Skeleton";
+import { useDispatch } from "react-redux";
+import { setSearchValue } from "../../../redux/Slices/Sneakers/SneakerSlice";
+import useDebounce from "../../../hooks/useDebounce";
 
 const Product = () => {
-  const { sneakersData, isContentLoaded } = UseMainContext();
-  const [searchValue, setSearchValue] = useState('');
+  const { sneakersData, status, searchValue } = UseMainContext();
+
+  const dispatch = useDispatch();
+
+  // const filteredBySearch = useDebounce(
+  //   () =>
+  //     sneakersData
+  //       .filter((item) => {
+  //         if (item.title.toLowerCase().includes(searchValue.toLowerCase())) {
+  //           return true;
+  //         }
+  //         return false;
+  //       })
+  //       .map((item) => {
+  //         return <ProductsCards key={item.id} {...item} />;
+  //       }),
+  //   1000,
+  //   [searchValue]
+  // );
 
   const filteredBySearch = sneakersData
     .filter((item) => {
-      if (item.title.toLowerCase().includes(searchValue.toLowerCase())) {
+      if (item.title.toLowerCase().includes(searchValue)) {
         return true;
       }
       return false;
@@ -29,12 +48,12 @@ const Product = () => {
             type="text"
             placeholder="Поиск..."
             value={searchValue}
-            onChange={(event) => setSearchValue(event.target.value)}
+            onChange={(event) => dispatch(setSearchValue(event.target.value))}
           />
         </div>
       </div>
       <div className="product_shop">
-        {isContentLoaded
+        {status === "success"
           ? filteredBySearch
           : [...new Array(10)].map((_, index) => {
               return <Skeleton key={index} />;
