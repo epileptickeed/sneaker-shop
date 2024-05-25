@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import SneakersType from "../../../interfaces/interfaces";
 import axios from "axios";
-import { RootState } from "@reduxjs/toolkit/query";
 
 interface SneakersTypeProps {
   sneakersData: SneakersType[];

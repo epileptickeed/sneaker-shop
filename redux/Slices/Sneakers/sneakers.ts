@@ -11,7 +11,7 @@ export const fetchSneakers = createAsyncThunk(
   `sneakers/fetchSneakers`,
   async () => {
     return axios
-      .get(`https://66324e21c51e14d695640a4c.mockapi.io/sneakers/sneakers`)
+      .get(`https://705099b380a00023.mokky.dev/sneakers`)
       .then((response) => response.data);
   }
 );
