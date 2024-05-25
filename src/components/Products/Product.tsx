@@ -4,14 +4,29 @@ import { CiSearch } from "react-icons/ci";
 import Skeleton from "../Skeleton/Skeleton";
 import { useDispatch } from "react-redux";
 import { setSearchValue } from "../../../redux/Slices/Sneakers/SneakerSlice";
+import { useCallback, useState } from "react";
+import debounce from "lodash.debounce";
 
 const Product = () => {
-  const { sneakersData, status, searchValue } = UseMainContext();
+  const { sneakersData, status } = UseMainContext();
+  const [value, setValue] = useState("");
 
   const dispatch = useDispatch();
+
+  const debounceSearch = useCallback(
+    debounce((str) => {
+      dispatch(setSearchValue(str));
+    }, 300),
+    []
+  );
+  const onChangeValue = (event: any) => {
+    setValue(event.target.value);
+    debounceSearch(event.target.value);
+  };
+
   const filteredBySearch = sneakersData
     .filter((item) => {
-      if (item.title.toLowerCase().includes(searchValue)) {
+      if (item.title.toLowerCase().includes(value)) {
         return true;
       }
       return false;
@@ -29,8 +44,8 @@ const Product = () => {
           <input
             type="text"
             placeholder="Поиск..."
-            value={searchValue}
-            onChange={(event) => dispatch(setSearchValue(event.target.value))}
+            value={value}
+            onChange={(event) => onChangeValue(event)}
           />
         </div>
       </div>
